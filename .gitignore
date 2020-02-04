@@ -1,0 +1,8 @@
+.classpath
+.project
+.settings/
+target/
+desafio.txt
+clientes.xml
+produtos.xml
+pedidos.xml
