@@ -93,9 +93,8 @@ public class PedidoCadastro implements Cadastro {
 	
 	private void realizarPedido() throws IllegalArgumentException, IOException {
 		Pedido pedido = builder.build();
-		pedido.atualizarEstoqueDoProduto();
-		Produto produto = pedido.getProduto();
-		produtoDAO.update(produto);
+		pedido.atualizaEstoqueDoProduto();
+		produtoDAO.update();
 		pedidoDAO.add(pedido);
 		builder.clear();
 	}

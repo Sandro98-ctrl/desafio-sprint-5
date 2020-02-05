@@ -23,6 +23,7 @@ public class PedidoDAO extends BaseDAO<PedidosMap> {
 	}
 
 	public boolean add(Pedido pedido) throws IOException {
+		pedido.atualizaValor();
 		return save(getMapping().addPedido(pedido));
 	}
 

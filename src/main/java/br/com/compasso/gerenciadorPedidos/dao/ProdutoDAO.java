@@ -31,22 +31,8 @@ public class ProdutoDAO extends BaseDAO<ProdutosMap> {
 		return getMapping().getProdutos().stream().filter(x -> x.getCodigo() == codigo).findFirst().orElse(null);
 	}
 
-	public boolean update(Produto produto) throws IOException {
-		if (getMapping().getProdutos().contains(produto)) {
-//			List<Produto> list = new ArrayList<Produto>(getMapping().getProdutos());
-			Collection<Produto> list = getMapping().getProdutos();
-
-			for (Produto prod : list) {
-				if (prod.equals(produto)) {
-					prod = produto;
-				}
-
-			}
-			save();
-			return true;
-		}
-
-		return false;
+	public void update() throws IOException {
+		save();
 	}
 
 	public List<Produto> getAll() {

@@ -17,6 +17,8 @@ public class Pedido {
 	private Produto produto;
 	@JacksonXmlProperty(localName = "quantidade")
 	private int quantidade;
+	@JacksonXmlProperty(localName = "valor")
+	private double valor;
 
 	public Pedido(int codigo, Cliente cliente, Produto produto, int quantidade) throws IllegalArgumentException {
 		if (codigo < 1) {
@@ -52,8 +54,16 @@ public class Pedido {
 	public int getQuantidade() {
 		return quantidade;
 	}
+	
+	public double getValor() {
+		return valor;
+	}
+	
+	public void atualizaValor() {
+		this.valor = produto.getPreco() * this.quantidade;
+	}
 
-	public void atualizarEstoqueDoProduto() {
+	public void atualizaEstoqueDoProduto() {
 		this.produto.atualizaEstoque(quantidade);
 	}
 
