@@ -1,9 +1,7 @@
 package br.com.compasso.gerenciadorPedidos.dao;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import br.com.compasso.gerenciadorPedidos.mapeamento.ClientesMap;
 import br.com.compasso.gerenciadorPedidos.models.Cliente;
@@ -25,13 +23,17 @@ public class ClienteDAO extends BaseDAO<ClientesMap> {
 	}
 
 	public boolean add(Cliente cliente) throws IOException {
-		return save(mapping.addCliente(cliente));
+		return save(getMapping().addCliente(cliente));
+	}
+	
+	public List<Cliente> getAll(){
+		return getMapping().getClientes();
 	}
 
 	public Cliente getByCpf(String cpf) {
-		return mapping.getClientes()
+		return getMapping().getClientes()
 				.stream()
-				.filter(x -> x.getCpf() == cpf)
+				.filter(x -> x.getCpf().equals(cpf))
 				.findFirst()
 				.orElse(null);
 	}

@@ -6,20 +6,14 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-public class Serializador<T> {
+public class Serializador {
 
-	private Class<T> classe;
-
-	public Serializador(Class<T> classe) {
-		this.classe = classe;
-	}
-
-	public void serialize(String fileName, T obj) throws IOException {
+	public <T> void serialize(String fileName, T obj) throws IOException {
 		ObjectMapper mapper = new XmlMapper();
 		mapper.writeValue(new File(fileName), obj);
 	}
 
-	public T deserialize(String fileName) throws IOException {
+	public <T> T deserialize(String fileName, Class<T> classe) throws IOException {
 		ObjectMapper mapper = new XmlMapper();
 		return mapper.readValue(new File(fileName), classe);
 	}

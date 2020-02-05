@@ -2,7 +2,7 @@ package br.com.compasso.gerenciadorPedidos.dao;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 import br.com.compasso.gerenciadorPedidos.mapeamento.ProdutosMap;
 import br.com.compasso.gerenciadorPedidos.models.Produto;
@@ -24,11 +24,33 @@ public class ProdutoDAO extends BaseDAO<ProdutosMap> {
 	}
 
 	public boolean add(Produto produto) throws IOException {
-		return save(mapping.addProduto(produto));
+		return save(getMapping().addProduto(produto));
 	}
-	
-	public Collection<Produto> getAll(){
-		return mapping.getProdutos();
+
+	public Produto getByCodigo(int codigo) {
+		return getMapping().getProdutos().stream().filter(x -> x.getCodigo() == codigo).findFirst().orElse(null);
+	}
+
+	public boolean update(Produto produto) throws IOException {
+		if (getMapping().getProdutos().contains(produto)) {
+//			List<Produto> list = new ArrayList<Produto>(getMapping().getProdutos());
+			Collection<Produto> list = getMapping().getProdutos();
+
+			for (Produto prod : list) {
+				if (prod.equals(produto)) {
+					prod = produto;
+				}
+
+			}
+			save();
+			return true;
+		}
+
+		return false;
+	}
+
+	public List<Produto> getAll() {
+		return getMapping().getProdutos();
 	}
 
 	@Override

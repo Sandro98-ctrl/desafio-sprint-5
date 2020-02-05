@@ -1,6 +1,7 @@
 package br.com.compasso.gerenciadorPedidos.dao;
 
 import java.io.IOException;
+import java.util.List;
 
 import br.com.compasso.gerenciadorPedidos.mapeamento.PedidosMap;
 import br.com.compasso.gerenciadorPedidos.models.Pedido;
@@ -22,7 +23,11 @@ public class PedidoDAO extends BaseDAO<PedidosMap> {
 	}
 
 	public boolean add(Pedido pedido) throws IOException {
-		return save(mapping.addPedido(pedido));
+		return save(getMapping().addPedido(pedido));
+	}
+
+	public List<Pedido> getAll() {
+		return getMapping().getPedidos();
 	}
 
 	@Override

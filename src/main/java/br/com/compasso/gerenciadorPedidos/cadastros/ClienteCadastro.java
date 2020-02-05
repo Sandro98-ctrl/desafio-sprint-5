@@ -1,22 +1,28 @@
 package br.com.compasso.gerenciadorPedidos.cadastros;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import br.com.compasso.gerenciadorPedidos.builders.ClienteBuilder;
 import br.com.compasso.gerenciadorPedidos.dao.ClienteDAO;
 import br.com.compasso.gerenciadorPedidos.menus.MenuCadastroCliente;
+import br.com.compasso.gerenciadorPedidos.mostra.Mostra;
+import br.com.compasso.gerenciadorPedidos.mostra.MostraClientes;
+import br.com.compasso.gerenciadorPedidos.services.InputReader;
 
 public class ClienteCadastro implements Cadastro {
 
 	private final ClienteDAO clienteDAO;
 	private final ClienteBuilder builder;
 	private final MenuCadastroCliente menuCadastro;
+	private final InputReader reader;
+	private final Mostra mostra;
 
-	public ClienteCadastro(Scanner sc) throws IOException {
-		clienteDAO = ClienteDAO.getInstance();
-		builder = new ClienteBuilder();
-		menuCadastro = new MenuCadastroCliente(sc);
+	public ClienteCadastro(InputReader reader) throws IOException {
+		this.reader = reader;
+		this.clienteDAO = ClienteDAO.getInstance();
+		this.builder = new ClienteBuilder();
+		this.menuCadastro = new MenuCadastroCliente();
+		this.mostra = new MostraClientes();
 	}
 
 	@Override
@@ -25,38 +31,65 @@ public class ClienteCadastro implements Cadastro {
 
 		do {
 			menuCadastro.menuPrincipal();
-			opcao = escolherOpcao(menuCadastro.readIntegerInput());
-		} while (opcao != 8);
+			opcao = escolherOpcao(reader.readInt());
+		} while (opcao != 9);
 	}
 
 	private int escolherOpcao(int opcao) throws IOException, NumberFormatException {
 		switch (opcao) {
 		case 1:
-			menuCadastro.cadastrarCpf(builder);
+			cadastrarCpf();
 			break;
 		case 2:
-			menuCadastro.cadastrarNome(builder);
+			cadastrarNome();
 			break;
 		case 3:
-			menuCadastro.cadastrarIdade(builder);
+			cadastrarIdade();
 			break;
 		case 4:
-			menuCadastro.cadastrarEndereco(builder);
+			cadastrarEndereco();
 			break;
 		case 5:
-			menuCadastro.cadastrarTodos(builder);
+			cadastrarCpf();
+			cadastrarNome();
+			cadastrarIdade();
+			cadastrarEndereco();
 			break;
 		case 6:
 			System.out.println(builder);
-			menuCadastro.keyBlock();
+			reader.keyUnlock();
 			break;
 		case 7:
+			mostra.mostrar();
+			reader.keyUnlock();
+			break;
+		case 8:
 			clienteDAO.add(builder.build());
 			builder.clear();
 			break;
 		}
 
 		return opcao;
+	}
+
+	private void cadastrarCpf() {
+		System.out.print("Digite o CPF: ");
+		builder.addCpf(reader.readLine());
+	}
+
+	private void cadastrarNome() {
+		System.out.print("Digite o nome: ");
+		builder.addNome(reader.readLine());
+	}
+
+	private void cadastrarIdade() throws NumberFormatException {
+		System.out.print("Digite a idade: ");
+		builder.addIdade(reader.readInt());
+	}
+
+	private void cadastrarEndereco() {
+		System.out.print("Digite o endereço: ");
+		builder.addEndereco(reader.readLine());
 	}
 
 }

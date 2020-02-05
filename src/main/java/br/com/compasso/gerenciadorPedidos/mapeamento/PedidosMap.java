@@ -1,7 +1,8 @@
 package br.com.compasso.gerenciadorPedidos.mapeamento;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -14,7 +15,7 @@ public class PedidosMap {
 
 	@JacksonXmlProperty(localName = "pedido")
 	@JacksonXmlElementWrapper(useWrapping = false)
-	private Collection<Pedido> pedidos;
+	private List<Pedido> pedidos;
 
 	public PedidosMap() {
 		pedidos = new ArrayList<Pedido>();
@@ -22,5 +23,9 @@ public class PedidosMap {
 
 	public boolean addPedido(Pedido pedido) {
 		return pedidos.add(pedido);
+	}
+
+	public List<Pedido> getPedidos() {
+		return Collections.unmodifiableList(pedidos);
 	}
 }

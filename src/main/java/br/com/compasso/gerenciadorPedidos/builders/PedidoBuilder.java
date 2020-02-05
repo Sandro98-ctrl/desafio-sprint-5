@@ -36,9 +36,9 @@ public class PedidoBuilder implements Builder<Pedido>{
 		return new StringBuffer()
 				.append("Código: " + codigo)
 				.append(System.lineSeparator())
-				.append("Produto: " + produto)
+				.append("Produto: " + (produto == null ? "[Nenhum Cadastrado]" : produto))
 				.append(System.lineSeparator())
-				.append("Cliente: " + cliente)
+				.append("Cliente: " + (cliente == null ? "[Nenhum Cadastrado]" : cliente))
 				.append(System.lineSeparator())
 				.append("Quantidade: " + quantidade)
 				.toString();
